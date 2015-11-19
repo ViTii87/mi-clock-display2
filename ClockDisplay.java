@@ -13,10 +13,9 @@ public class ClockDisplay
     private NumberDisplay minutos = new NumberDisplay(60);
     // Atributo de tipo String para guardar la hora completa.
     private String horaFinal;
-    
+       
     /**
-     * Constructor para crear un reloj con las horas y minutos fijadas a 0, le pasaremos un booleano como parametro, si es TRUE representamos
-     * la hora en el formato de 12 horas, si es false en el de 24
+     * Constructor para crear un reloj con las horas y minutos fijadas a 0
      */
     public ClockDisplay()
     {
