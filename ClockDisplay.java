@@ -13,29 +13,37 @@ public class ClockDisplay
     private NumberDisplay minutos = new NumberDisplay(60);
     // Atributo de tipo String para guardar la hora completa.
     private String horaFinal;
+    // Atributo de tipo booleano para comprobar si mostramos el formato de 12 o de 24
+    private boolean formato;
        
     /**
-     * Constructor para crear un reloj con las horas y minutos fijadas a 0
+     * Constructor para crear un reloj con las horas y minutos fijadas a 0, le pasamos como parametro format que sera formato 12 horas(true)
+     * o formato 24 horas(false)
      */
-    public ClockDisplay()
+    public ClockDisplay(boolean format)
     {
         // Fijamos mediante el metodo setValue de la clase NumberDisplay la hora por defecto a 0.
         horas.setValue(0);
         // Lo mismo con los minutos.
         minutos.setValue(0);
+        // Booleano para comprobar el tipo de formato en base a su valor.
+        formato = format;
         // Actualizamos nuestro string al formato correcto
         horaBuena();
     }
     
     /**
-     * Constructor que crea un reloj con las horas y minutos pasados como parametros
+     * Constructor que crea un reloj con las horas y minutos pasados como parametros tambien le pasamos como parametro format que sera formato 12 horas(true)
+     * o formato 24 horas(false)
      */
-    public ClockDisplay(int hora, int minuto)
+    public ClockDisplay(int hora, int minuto, boolean format)
     {
         // Fijamos mediante el metodo setValue de la clase NumberDisplay la hora introducida como parametro.
         horas.setValue(hora);
         // Lo mismo con los minutos.
         minutos.setValue(minuto);
+        // Booleano para comprobar el tipo de formato en base a su valor.
+        formato = format;
         // Actualizamos nuestro string al formato correcto
         horaBuena();
     }
@@ -81,26 +89,31 @@ public class ClockDisplay
      * Metodo para cambiar la hora al formato de 12 horas, lo llamaremos para actualizar nuestro String al formato correcto.
      */
     public void horaBuena(){
-        // Primero miramos si el valor de las horas es menor a 12, en cuyo caso llevara A.M.
-        if(horas.getValue() < 12){
-            horaFinal = horas.getDisplayValue() + ":" + minutos.getDisplayValue() +  " A.M.";
+        if (formato == true){
+            // Primero miramos si el valor de las horas es menor a 12, en cuyo caso llevara A.M.
+            if(horas.getValue() < 12){
+                horaFinal = horas.getDisplayValue() + ":" + minutos.getDisplayValue() +  " A.M.";
+            }
+            else{
+                // Si no la hora tendra que ser las 12 del mediodia con el formato P.M.
+                if(horas.getValue() == 12){
+                    // Devolvemos la hora con el nuevo formato
+                    horaFinal = "12" + ":" + minutos.getDisplayValue() + " P.M.";
+                }
+                else{
+                    // Por ultimo si no se da ninguna de las anteiores restaremos a 12 la hora para devolver el formato correcto de la tarde
+                    // Ademas comprobaremos si el valor de restarle 12 es menor a 10 para añadirle un 0 o no.
+                    if((horas.getValue() - 12) < 10){
+                        horaFinal = "0" + (horas.getValue() - 12) + ":" + minutos.getDisplayValue() + " P.M.";   
+                    }
+                    else{
+                        horaFinal = (horas.getValue() - 12) + ":" + minutos.getDisplayValue() + " P.M.";  
+                    }     
+                }
+            }
         }
         else{
-             // Si no la hora tendra que ser las 12 del mediodia con el formato P.M.
-             if(horas.getValue() == 12){
-                 // Devolvemos la hora con el nuevo formato
-                 horaFinal = "12" + ":" + minutos.getDisplayValue() + " P.M.";
-             }
-             else{
-                  // Por ultimo si no se da ninguna de las anteiores restaremos a 12 la hora para devolver el formato correcto de la tarde
-                  // Ademas comprobaremos si el valor de restarle 12 es menor a 10 para añadirle un 0 o no.
-                  if((horas.getValue() - 12) < 10){
-                      horaFinal = "0" + (horas.getValue() - 12) + ":" + minutos.getDisplayValue() + " P.M.";   
-                  }
-                  else{
-                      horaFinal = (horas.getValue() - 12) + ":" + minutos.getDisplayValue() + " P.M.";  
-                  }     
-             }
+            horaFinal = horas.getDisplayValue() + ":" + minutos.getDisplayValue();
         }
     }
 }
