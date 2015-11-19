@@ -112,8 +112,23 @@ public class ClockDisplay
                 }
             }
         }
-        else{
+        else{ //Si el formato no fuera el de 12 horas, mostramos el de 24.
             horaFinal = horas.getDisplayValue() + ":" + minutos.getDisplayValue();
+        }
+    }
+    
+    /**
+     * Metodo para alternar la hora entre el formato de 12 y de 24 horas.
+     */
+    public void alternaHora(){
+        // Comprobamos si lo tenemos en formato 12 horas, entonces pasamos el formato a false(24 horas) y actualizamos nuestro String.
+        if(formato == true){
+            formato = false;
+            horaBuena();
+        }
+        else{ // Hacemos lo mismo en el caso contrario.
+            formato = true;
+            horaBuena();
         }
     }
 }
