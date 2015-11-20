@@ -92,7 +92,12 @@ public class ClockDisplay
         if (formato == true){
             // Primero miramos si el valor de las horas es menor a 12, en cuyo caso llevara A.M.
             if(horas.getValue() < 12){
-                horaFinal = horas.getDisplayValue() + ":" + minutos.getDisplayValue() +  " A.M.";
+                if(horas.getValue() == 0){
+                    horaFinal = "12" + ":" + minutos.getDisplayValue() +  " A.M.";
+                }
+                else{
+                    horaFinal = horas.getDisplayValue() + ":" + minutos.getDisplayValue() +  " A.M.";
+                }
             }
             else{
                 // Si no la hora tendra que ser las 12 del mediodia con el formato P.M.
@@ -121,14 +126,8 @@ public class ClockDisplay
      * Metodo para alternar la hora entre el formato de 12 y de 24 horas.
      */
     public void alternaHora(){
-        // Comprobamos si lo tenemos en formato 12 horas, entonces pasamos el formato a false(24 horas) y actualizamos nuestro String.
-        if(formato == true){
-            formato = false;
-            horaBuena();
-        }
-        else{ // Hacemos lo mismo en el caso contrario.
-            formato = true;
-            horaBuena();
-        }
+        // Cambiamos el valor del formato y hacemos llamada a nuestro metodo para que muestre correctamente la el formato.
+        formato = !formato;
+        horaBuena();
     }
 }
