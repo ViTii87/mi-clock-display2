@@ -8,13 +8,19 @@
 public class ClockDisplay
 {
     // Atributo de tipo NumberDisplay para las horas
-    private NumberDisplay horas = new NumberDisplay(24);
+    private NumberDisplay horas;
     // Atributo de tipo NumberDisplay para los minutos
-    private NumberDisplay minutos = new NumberDisplay(60);
+    private NumberDisplay minutos; 
     // Atributo de tipo String para guardar la hora completa.
     private String horaFinal;
     // Atributo de tipo booleano para comprobar si mostramos el formato de 12 o de 24
     private boolean formato;
+    // Atributo de tipo NumberDisplay para guardar los dias.
+    private NumberDisplay dia;
+    // Atributo de tipo NumberDisplay para guardar los meses.
+    private NumberDisplay mes;
+    // Atributo de tipo NumberDisplay para guardar los años.
+    private NumberDisplay anno;
        
     /**
      * Constructor para crear un reloj con las horas y minutos fijadas a 0, le pasamos como parametro format que sera formato 12 horas(true)
@@ -22,6 +28,20 @@ public class ClockDisplay
      */
     public ClockDisplay(boolean format)
     {
+        // Inicializamos los atributos con el limite deseado.
+        horas = new NumberDisplay(24);
+        minutos = new NumberDisplay(60);
+        dia = new NumberDisplay(30);
+        mes = new NumberDisplay(12);
+        anno = new NumberDisplay(99);
+        
+        // Fiajamos por defecto los dias a 0
+        dia.setValue(0);
+        // Fijamos por defecto los meses a 0.
+        mes.setValue(0);
+        // Fijamos por defecto los años a 0.
+        anno.setValue(0);
+        
         // Fijamos mediante el metodo setValue de la clase NumberDisplay la hora por defecto a 0.
         horas.setValue(0);
         // Lo mismo con los minutos.
@@ -30,14 +50,32 @@ public class ClockDisplay
         formato = format;
         // Actualizamos nuestro string al formato correcto
         horaBuena();
+        // Actualizamos nuestro String con la fecha añadida.
+        horaFinal = dia.getDisplayValue() + "/" + mes.getDisplayValue() + "/" + anno.getDisplayValue() + " " + horaFinal;
     }
     
     /**
      * Constructor que crea un reloj con las horas y minutos pasados como parametros tambien le pasamos como parametro format que sera formato 12 horas(true)
      * o formato 24 horas(false)
      */
-    public ClockDisplay(int hora, int minuto, boolean format)
+    public ClockDisplay(int hora, int minuto, boolean format, int diaIntroducido, int mesIntroducido, int annoIntroducido)
     {
+        // Inicializamos los atributos con el limite deseado.
+        horas = new NumberDisplay(24);
+        minutos = new NumberDisplay(60);
+        horas = new NumberDisplay(24);
+        minutos = new NumberDisplay(60);
+        dia = new NumberDisplay(30);
+        mes = new NumberDisplay(12);
+        anno = new NumberDisplay(99);
+        
+        // Fiajamos por defecto los dias a lo introducido por parametro.
+        dia.setValue(diaIntroducido);
+        // Fijamos por defecto los meses a lo introducido por parametro.
+        mes.setValue(mesIntroducido);
+        // Fijamos por defecto los años a lo introducido por parametro.
+        anno.setValue(annoIntroducido);
+        
         // Fijamos mediante el metodo setValue de la clase NumberDisplay la hora introducida como parametro.
         horas.setValue(hora);
         // Lo mismo con los minutos.
@@ -46,19 +84,30 @@ public class ClockDisplay
         formato = format;
         // Actualizamos nuestro string al formato correcto
         horaBuena();
+        // Actualizamos nuestro String con la fecha añadida.
+        horaFinal = dia.getDisplayValue() + "/" + mes.getDisplayValue() + "/" + anno.getDisplayValue() + " " + horaFinal;
     }
     
     /**
      * Metodo para fijar el tiempo del reloj pasandole como parametros la hora y los minutos
      */
-    public void setTime(int horaNueva, int minutoNuevo)
+    public void setTime(int horaNueva, int minutoNuevo, int diaIntroducido, int mesIntroducido, int annoIntroducido)
     {
         // Fijamos mediante el metodo setValue de la clase NumberDisplay los minutos pasados como parametro.
         minutos.setValue(minutoNuevo);
         // Fijamos las horas mediante el metodo setValue()
         horas.setValue(horaNueva);
+        // Fiajamos por defecto los dias a lo introducido por parametro.
+        dia.setValue(diaIntroducido);
+        // Fijamos por defecto los meses a lo introducido por parametro.
+        mes.setValue(mesIntroducido);
+        // Fijamos por defecto los años a lo introducido por parametro.
+        anno.setValue(annoIntroducido);
+        
         // Llamamos a nuestro metodo para dejar la hora en el formato correcto.
         horaBuena();
+        // Actualizamos nuestro String con la fecha añadida.
+        horaFinal = dia.getDisplayValue() + "/" + mes.getDisplayValue() + "/" + anno.getDisplayValue() + " " + horaFinal;
     }
     
     /**
@@ -78,11 +127,25 @@ public class ClockDisplay
         // Incrementamos los minutos llamando a el metodo increment de la clase NumberDisplay.
         minutos.increment();
         // Obtengo los minutos mediante un metodo de la clase NumberDisplay y si son igual a 0 quiere decir que tenemos que incrementar una hora.
+        // Hariamos el mismo procedimiento con las horas, dias, meses y años.
         if( minutos.getValue() == 0) {
             horas.increment();
+            if(horas.getValue() == 0) {
+                dia.increment();
+                if(dia.getValue() == 0){
+                    dia.setValue(1);
+                    mes.increment();
+                    if(mes.getValue() == 0){
+                        mes.setValue(1);
+                        anno.increment();
+                    }
+                }
+            }
         }
         // Actualizamos nuestro String despues de haber aplicado las operaciones en el formato correcto.
         horaBuena();
+        // Actualizamos nuestro String con la fecha añadida.
+        horaFinal = dia.getDisplayValue() + "/" + mes.getDisplayValue() + "/" + anno.getDisplayValue() + " " + horaFinal;
     }
     
     /**
@@ -129,5 +192,8 @@ public class ClockDisplay
         // Cambiamos el valor del formato y hacemos llamada a nuestro metodo para que muestre correctamente la el formato.
         formato = !formato;
         horaBuena();
+        // Actualizamos nuestro String con la fecha añadida.
+        horaFinal = dia.getDisplayValue() + "/" + mes.getDisplayValue() + "/" + anno.getDisplayValue() + " " + horaFinal;
     }
+    
 }
