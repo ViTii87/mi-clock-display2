@@ -5,6 +5,8 @@
  * @author (your name) 
  * @version (a version number or a date)
  */
+import java.util.Calendar;
+
 public class ClockDisplay
 {
     // Atributo de tipo NumberDisplay para las horas
@@ -21,6 +23,8 @@ public class ClockDisplay
     private NumberDisplay mes;
     // Atributo de tipo NumberDisplay para guardar los años.
     private NumberDisplay anno;
+    // Atributo de la calse Calendar para fijar la fecha por defecto a la del dia actual.
+    private Calendar hoy;
        
     /**
      * Constructor para crear un reloj con las horas y minutos fijadas a 0, le pasamos como parametro format que sera formato 12 horas(true)
@@ -34,13 +38,15 @@ public class ClockDisplay
         dia = new NumberDisplay(30);
         mes = new NumberDisplay(12);
         anno = new NumberDisplay(100);
+        // Inicializamos el atributo hoy.
+        hoy = Calendar.getInstance();
         
-        // Fiajamos por defecto los dias a 0
-        dia.setValue(0);
-        // Fijamos por defecto los meses a 0.
-        mes.setValue(0);
-        // Fijamos por defecto los años a 0.
-        anno.setValue(0);
+        // Fiajamos por defecto los dias del dia actual.
+        dia.setValue(hoy.get(Calendar.DAY_OF_MONTH));
+        // Fijamos por defecto los meses del mes actual.
+        mes.setValue(hoy.get(Calendar.MONTH)+1);
+        // Fijamos por defecto los años del año actual.
+        anno.setValue(hoy.get(Calendar.YEAR)%100);
         
         // Fijamos mediante el metodo setValue de la clase NumberDisplay la hora por defecto a 0.
         horas.setValue(0);
