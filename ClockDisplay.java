@@ -33,7 +33,7 @@ public class ClockDisplay
         minutos = new NumberDisplay(60);
         dia = new NumberDisplay(30);
         mes = new NumberDisplay(12);
-        anno = new NumberDisplay(99);
+        anno = new NumberDisplay(100);
         
         // Fiajamos por defecto los dias a 0
         dia.setValue(0);
@@ -67,7 +67,7 @@ public class ClockDisplay
         minutos = new NumberDisplay(60);
         dia = new NumberDisplay(30);
         mes = new NumberDisplay(12);
-        anno = new NumberDisplay(99);
+        anno = new NumberDisplay(100);
         
         // Fiajamos por defecto los dias a lo introducido por parametro.
         dia.setValue(diaIntroducido);
